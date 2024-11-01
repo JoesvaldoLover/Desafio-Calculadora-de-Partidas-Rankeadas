@@ -1,5 +1,19 @@
 function calcWinRate(wins, loses) {
-    return wins - loses;
+    return wins - loses
+}
+
+// Função principal da partida
+// Retorna true, indicando vitória da equipe do jogador,
+// Ou falso, indicando derrota da equipe do jogador
+function mainMatch(heroWinRate) {
+    const enemyPlayer = getEnemyWinRate(heroWinRate)
+    return heroWinRate >= enemyPlayer
+}
+
+// Gera e retorna um valor baseado no saldo de vitória informado,
+// variando entre 90% e 110% do saldo recebido pelo parâmetro
+function getEnemyWinRate(winRateBase) {
+    return Math.round(Math.random() * (winRateBase * 0.2) + (winRateBase * 0.9))
 }
 
 function getRanking(winRate) {
@@ -22,10 +36,22 @@ function getRanking(winRate) {
     return rank
 }
 
-let wins = 120
-let loses = 65
+let wins = 100
+let loses = 50
 
 let winRate = calcWinRate(wins, loses)
-let rank = getRanking(winRate)
 
-console.log(`O Herói tem saldo de ${winRate} está no nível ${rank}`)
+totalPartidas = 100
+
+for (let i = 0; i < totalPartidas; i++) {
+    if(mainMatch(winRate))
+        wins++
+    else
+        loses++
+
+    winRate = calcWinRate(wins, loses)
+}
+
+const RANK = getRanking(winRate)
+
+console.log(`O Herói tem saldo de ${winRate} está no nível ${RANK}`)
